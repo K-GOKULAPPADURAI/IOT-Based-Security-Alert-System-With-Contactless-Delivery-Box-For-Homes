@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IOT BASED SECURITY ALERT SYSTEM WITH CONTACTLESS DELIVERY DROP BOX FOR HOMES</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url("{{ url_for('static', filename='IOT.png') }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        #video-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+
+        #image-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+
+        #lock-container {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+
+        #lock-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #lock-button:hover {
+            background-color: #45a049;
+        }
+
+        #status {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IOT BASED SECURITY ALERT SYSTEM WITH CONTACTLESS DELIVERY DROP BOX FOR HOMES</h1>
+
+    <div id="video-container">
+        <h2>Live Video Streaming</h2>
+        <iframe src="{{ video_url }}" width="640" height="480" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div id="image-container">
+        <h2>Last Captured Image</h2>
+        <img src="{{ image_url }}" width="640" height="480" alt="Last Captured Image">
+    </div>
+
+    <div id="lock-container">
+        <h2>Delivery Drop Box Lock</h2>
+        <button id="lock-button" onclick="toggleLock()">Toggle Lock</button>
+    </div>
+
+    <div id="status">
+        <h2>Product Status</h2>
+        <p>{{ product_status }}</p>
+    </div>
+
+    <script>
+        function toggleLock() {
+            var lockButton = document.getElementById("lock-button");
+            var currentState = lockButton.innerHTML;
+            var newState = (currentState === "Lock") ? "Unlock" : "Lock";
+            lockButton.innerHTML = newState;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/toggle_lock/" + newState.toLowerCase(), true);
+            xhr.send();
+        }
+    </script>
+</body>
